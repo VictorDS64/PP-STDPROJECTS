@@ -1,11 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingeniería Ultra 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Roboto', sans-serif; background:#f0f2f5; color:#333; scroll-behavior: smooth; perspective:1000px; }
+
+  /* Header parallax multi-capas */
+  header { height: 80vh; position: relative; overflow: hidden; display:flex; justify-content:center; align-items:center; flex-direction:column; }
+  .parallax-bg, .parallax-layer { position:absolute; top:0; left:0; width:100%; height:100%; background-size:cover; background-position:center; }
+  .parallax-bg { background:url('https://www.umayor.cl/um/bundles/carreras/images/carreras/temuco/ingenieria-en-construccion.webp') no-repeat center/cover; z-index:0; transform:translateZ(-1px) scale(2); }
+  .parallax-layer { z-index:1; opacity:0.3; background:url('https://images.unsplash.com/photo-1521791136064-7986c2920216?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=1600') no-repeat center/cover; }
+  header::after { content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2; }
+  header h1 { font-size:3rem; z-index:3; color:white; }
+  header p { font-size:1.3rem; z-index:3; color:white; margin-top:10px; }
+
+  /* Menu sticky */
+  nav { background-color:#0059b3; display:flex; justify-content:center; flex-wrap:wrap; position:sticky; top:0; z-index:1000; transition:0.3s; }
+  nav.scrolled { background-color:#004080; }
+  nav a { color:white; padding:15px 25px; text-decoration:none; font-weight:bold; transition:0.3s; }
+  nav a:hover { background-color:#003366; }
+
+  /* Secciones */
+  section { max-width:1000px; margin:60px auto; padding:40px 20px; background:white; border-radius:10px; box-shadow:0 5px 20px rgba(0,0,0,0.1); opacity:0; transform:translateY(30px); transition:all 1s ease; }
+  section h2 { color:#004080; margin-bottom:20px; text-align:center; }
+  section p, section ul { margin-bottom:15px; }
+
+  /* Slider 3D profesional */
+  .slider-3d { perspective:1500px; position: relative; width:100%; height:400px; overflow:hidden; margin-bottom:20px; }
+  .slides-3d { display:flex; transform-style: preserve-3d; transition: transform 1s; height:100%; }
+  .slides-3d img { width:100%; flex-shrink:0; border-radius:10px; transition: transform 0.5s, box-shadow 0.5s; }
+  .slides-3d img:hover { transform: scale(1.05) rotateY(5deg); box-shadow:0 10px 30px rgba(0,0,0,0.5); }
+
+  .slider-buttons { position:absolute; top:50%; width:100%; display:flex; justify-content:space-between; transform:translateY(-50%); }
+  .slider-buttons button { background-color:rgba(0,0,0,0.5); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; transition:0.3s; }
+  .slider-buttons button:hover { background-color:#0066cc; }
+
+  /* Materias 3D */
+  .materias-list { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .materias-list li { list-style:none; background:#004080; color:white; padding:15px 25px; border-radius:10px; cursor:pointer; transition: transform 0.5s, box-shadow 0.5s; perspective:800px; }
+  .materias-list li:hover { transform: rotateX(10deg) rotateY(10deg) scale(1.05); box-shadow:0 10px 20px rgba(0,0,0,0.5); }
+
+  /* Formulario con modal */
+  form { display:flex; flex-direction:column; }
+  input, textarea { padding:10px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc; font-size:1rem; }
+  input:focus, textarea:focus { outline:none; border-color:#0066cc; }
+  button.contact { width:150px; align-self:center; cursor:pointer; transition:0.3s; }
+  button.contact:hover { background-color:#0066cc; color:white; }
+
+  /* Modal */
+  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:10000; }
+  .modal-content { background:white; padding:30px; border-radius:10px; text-align:center; max-width:400px; transform:scale(0); transition:transform 0.3s; }
+
+  .modal.show .modal-content { transform:scale(1); }
+
+  footer { text-align:center; padding:20px; background-color:#004080; color:white; margin-top:40px; }
+
+  /* Parallax secciones */
+  .parallax { background-attachment: fixed; background-size:cover; background-position:center; min-height:300px; border-radius:10px; margin-bottom:40px; }
+
+</style>
 </head>
 <body>
-    <h1>Hola</h1>
+
+<header>
+  <div class="parallax-bg"></div>
+  <div class="parallax-layer"></div>
+  <h1>Ingeniería Ultra 3D</h1>
+  <p>Innovación y Tecnología Profesional</p>
+</header>
+
+<nav id="navbar">
+  <a href="#inicio">Inicio</a>
+  <a href="#informacion">Información</a>
+  <a href="#proyectos">Proyectos</a>
+  <a href="#materias">Materias</a>
+  <a href="#contacto">Contacto</a>
+</nav>
+
+<section id="inicio" class="section">
+  <h2>Bienvenida</h2>
+  <p>La Ingeniería Ultra 3D prepara a los estudiantes para enfrentar retos tecnológicos con enfoque en software, IA, redes y proyectos innovadores.</p>
+</section>
+
+<section id="informacion" class="section parallax" style="background-image:url('https://images.unsplash.com/photo-1555949963-aa79dcee981d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600');">
+  <h2 style="color:white;">Información de la carrera</h2>
+  <p style="color:white;"><strong>Duración:</strong> 5 años</p>
+  <p style="color:white;"><strong>Título:</strong> Ingeniero Profesional en Sistemas</p>
+  <p style="color:white;"><strong>Objetivos:</strong> Formar profesionales capaces de diseñar, implementar y mantener soluciones tecnológicas seguras e innovadoras.</p>
+</section>
+
+<section id="proyectos" class="section">
+  <h2>Proyectos y Laboratorios</h2>
+  <div class="slider-3d">
+    <div class="slides-3d">
+      <img src="https://info.marista.edu.mx/hs-fs/hubfs/blog%20img/ingenieria-civil-trabajo.jpg?width=730&height=365&name=ingenieria-civil-trabajo.jpg" alt="Proyecto 1">
+      <img src="https://images.unsplash.com/photo-1581091870627-3d1920d48d5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Proyecto 2">
+      <img src="https://images.unsplash.com/photo-1581091870627-3d1920d48d5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Proyecto 3">
+    </div>
+    <div class="slider-buttons">
+      <button id="prev">❮</button>
+      <button id="next">❯</button>
+    </div>
+  </div>
+</section>
+
+<section id="materias" class="section">
+  <h2>Plan de Estudios Interactivo 3D</h2>
+  <ul class="materias-list">
+    <li>Programación I y II</li>
+    <li>Estructuras de Datos</li>
+    <li>Base de Datos y SQL</li>
+    <li>Sistemas Operativos</li>
+    <li>Redes y Seguridad Informática</li>
+    <li>Inteligencia Artificial</li>
+    <li>Desarrollo de Aplicaciones Web</li>
+  </ul>
+</section>
+
+<section id="contacto" class="section">
+  <h2>Contacto</h2>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Nombre" required>
+    <input type="email" id="email" placeholder="Correo electrónico" required>
+    <textarea id="message" rows="5" placeholder="Mensaje" required></textarea>
+    <button class="contact" type="submit">Enviar</button>
+  </form>
+</section>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content" id="modalContent">
+    <h2>¡Mensaje enviado!</h2>
+    <p>Gracias por contactarnos. Pronto recibirá respuesta.</p>
+    <button onclick="closeModal()">Cerrar</button>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Ingeniería Ultra 3D. Todos los derechos reservados.
+</footer>
+
+<script>
+  // Scroll animations
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = "translateY(0)";
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  sections.forEach(section => observer.observe(section));
+
+  // Sticky menu
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 50) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  });
+
+  // Slider 3D
+  const slides3d = document.querySelector('.slides-3d');
+  const total3d = slides3d.children.length;
+  let index3d = 0;
+  const showSlide3d = (i) => { slides3d.style.transform = `rotateY(${i * -30}deg) translateZ(-200px)`; }
+  document.getElementById('next').addEventListener('click', () => { index3d = (index3d + 1) % total3d; showSlide3d(index3d); });
+  document.getElementById('prev').addEventListener('click', () => { index3d = (index3d - 1 + total3d) % total3d; showSlide3d(index3d); });
+  setInterval(() => { index3d = (index3d + 1) % total3d; showSlide3d(index3d); }, 5000);
+
+  // Materias 3D interactivas
+  document.querySelectorAll('.materias-list li').forEach(li => {
+    li.addEventListener('mouseenter', () => li.style.transform = 'rotateX(10deg) rotateY(10deg) scale(1.1)');
+    li.addEventListener('mouseleave', () => li.style.transform = 'rotateX(0) rotateY(0) scale(1)');
+    li.addEventListener('click', () => li.classList.toggle('completed'));
+  });
+
+  // Modal
+  const modal = document.getElementById('modal');
+  const openModal = () => { modal.style.display='flex'; modal.classList.add('show'); }
+  const closeModal = () => { modal.classList.remove('show'); setTimeout(()=>modal.style.display='none',300); }
+
+  // Form validation + modal
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const msg = form.message.value.trim();
+    if(name === "" || email === "" || msg === "") { alert("Por favor complete todos los campos"); return; }
+    openModal();
+    form.reset();
+  });
+
+  // Parallax header multi-capas
+  window.addEventListener('scroll', () => {
+    const parallax = document.querySelector('.parallax-bg');
+    const layer = document.querySelector('.parallax-layer');
+    parallax.style.transform = `translateY(${window.scrollY * 0.4}px) scale(2)`;
+    layer.style.transform = `translateY(${window.scrollY * 0.2}px) scale(1.5)`;
+  });
+</script>
+
 </body>
 </html>
